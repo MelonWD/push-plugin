@@ -148,13 +148,9 @@ static IMP handleActionWithIdentifierOriginalMethod = NULL;
         appState = application.applicationState;
     }
     
-    if (appState == UIApplicationStateActive) {
-        [Push sharedInstance].notificationMessage = userInfo;
-        [Push sharedInstance].isInline = YES;
-        [[Push sharedInstance] notificationReceived];        
-    } else {
-        [Push sharedInstance].launchNotification = userInfo;
-    }
+    [Push sharedInstance].notificationMessage = userInfo;
+    [Push sharedInstance].isInline = appState == UIApplicationStateActive;
+    [[Push sharedInstance] notificationReceived];
 }
 
 - (void)my_application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
